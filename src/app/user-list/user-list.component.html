@@ -1,0 +1,61 @@
+
+
+<div style="overflow-x: scroll; width: 100vw">
+  <mat-table
+    class="heading"
+    [dataSource]="
+      asyncMeals
+        | async
+        | paginate
+          : {
+              id: 'server',
+              itemsPerPage: 10,
+              currentPage: p,
+              totalItems: total
+            }
+    "
+    class="mat-elevation-z8"
+  >
+    <!-- Position Column -->
+    <ng-container matColumnDef="id">
+      <mat-header-cell *matHeaderCellDef> ID. </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{ element.id }} </mat-cell>
+    </ng-container>
+
+    <!-- Name Column -->
+    <ng-container matColumnDef="first_name">
+      <mat-header-cell *matHeaderCellDef> First Name </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{ element.first_name }} </mat-cell>
+    </ng-container>
+
+    <!-- Last Name Column -->
+    <ng-container matColumnDef="last_name">
+      <mat-header-cell *matHeaderCellDef> Last Name </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{ element.last_name }} </mat-cell>
+    </ng-container>
+
+    <!-- emailId Column -->
+    <ng-container matColumnDef="email">
+      <mat-header-cell *matHeaderCellDef> Email Id</mat-header-cell>
+      <mat-cell *matCellDef="let element" style="overflow-wrap: anywhere;"> {{ element.email }} </mat-cell>
+    </ng-container>
+
+    <!-- avatar Column -->
+    <ng-container matColumnDef="imaageUrl">
+      <mat-header-cell *matHeaderCellDef> Image </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <img style="width: 12vh" [src]="element.avatar" />
+      </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+  </mat-table>
+</div>
+
+<div class="has-text-centered" style="float: right;">
+  <div class="spinner" [ngClass]="{ hidden: !loading }"></div>
+  <pagination-controls
+    (pageChange)="getPage($event)"
+    id="server"></pagination-controls>
+</div>
